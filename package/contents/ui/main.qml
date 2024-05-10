@@ -13,15 +13,30 @@ import org.kde.kirigami as Kirigami
 PlasmoidItem  {
   id: root
 
-  property bool showLogout: plasmoid.configuration.showLogout
-  property bool showLockscreen: plasmoid.configuration.showLockscreen
-  property bool showSuspend: plasmoid.configuration.showSuspend
-  property bool showHibernate: plasmoid.configuration.showHibernate
-  property bool showReboot: plasmoid.configuration.showReboot
-  property bool showKexec: plasmoid.configuration.showKexec
+  property bool showAboutThisComputer: plasmoid.configuration.showAboutThisComputer
+  property bool showSystemPreferences: plasmoid.configuration.showSystemPreferences
+  property bool showAppStore: plasmoid.configuration.showAppStore
+  property bool showForceQuit: plasmoid.configuration.showForceQuit
+  property bool showSleep: plasmoid.configuration.showSleep
+  property bool showRestart: plasmoid.configuration.showRestart
   property bool showShutdown: plasmoid.configuration.showShutdown
-  property string icon: plasmoid.configuration.icon
+  property bool showLockScreen: plasmoid.configuration.showLockScreen
+  property bool showLogout: plasmoid.configuration.showLogout
+  
 
+  property string icon: plasmoid.configuration.icon
+  property string aboutThisComputer: plasmoid.configuration.aboutThisComputer
+  property string systemPreferences: plasmoid.configuration.systemPreferences
+  property string appStore: plasmoid.configuration.appStore
+  property string forceQuit: plasmoid.configuration.forceQuit
+  property string sleep: plasmoid.configuration.sleep
+  property string restart: plasmoid.configuration.restart
+  property string shutDown: plasmoid.configuration.shutDown
+  property string lockScreen: plasmoid.configuration.lockScreen
+  property string logOut: plasmoid.configuration.logOut
+
+  property string lineColor: '#1E000000'
+  
   Plasmoid.icon: icon
 
   Plasma5Support.DataSource {
@@ -42,10 +57,6 @@ PlasmoidItem  {
     z: -1 // otherwise it shows ontop of the icon/label and tints them slightly
   }
 
-  // function action_logOut() {
-  //   executable.exec('qdbus org.kde.LogoutPrompt /LogoutPrompt  promptLogout')
-  // }
-
   fullRepresentation: Item {
     Layout.preferredWidth: plasmoid.configuration.width
     Layout.preferredHeight: plasmoid.configuration.height
@@ -60,66 +71,117 @@ PlasmoidItem  {
       spacing: 0
 
       ListDelegate {
-        id: logoutButton
-        text: "Logout"
+        text: "About This Computer"
         highlight: delegateHighlight
-        icon: "system-log-out"
-        onClicked: executable.exec('qdbus org.kde.LogoutPrompt /LogoutPrompt promptLogout')
-        visible: showLogout
+        icon: "about"
+        onClicked: executable.exec(aboutThisComputer)
+        visible: showAboutThisComputer
+      }
+
+      MenuSeparator {
+        padding: 0
+        // topPadding: 5
+        // bottomPadding: 5
+        contentItem: Rectangle {
+          implicitWidth: plasmoid.configuration.width
+          implicitHeight: 1.1
+          color: lineColor
+        }
+        visible: showAboutThisComputer
       }
 
       ListDelegate {
-        id: lockButton
+        text: "System Preferences..."
+        highlight: delegateHighlight
+        icon: "system-settings"
+        onClicked: executable.exec(systemPreferences)
+        visible: showSystemPreferences
+      }
+
+      ListDelegate {
+        text: "App Store..."
+        highlight: delegateHighlight
+        icon: "system-software-update"
+        onClicked: executable.exec(appStore)
+        visible: showAppStore
+      }
+
+      MenuSeparator {
+        padding: 0
+        contentItem: Rectangle {
+          implicitWidth: plasmoid.configuration.width
+          implicitHeight: 1.1
+          color: lineColor
+        }
+        visible: showSystemPreferences || showAppStore
+      }
+
+      ListDelegate {
+        text: "Force Quit..."
+        highlight: delegateHighlight
+        icon: "error"
+        onClicked: executable.exec(forceQuit)
+        visible: showForceQuit
+      }
+
+      MenuSeparator {
+        padding: 0
+        contentItem: Rectangle {
+          implicitWidth: plasmoid.configuration.width
+          implicitHeight: 1.1
+          color: lineColor
+        }
+        visible: showForceQuit
+      }
+
+      ListDelegate {
+        text: "Sleep"
+        highlight: delegateHighlight
+        icon: "system-suspend"
+        onClicked: executable.exec(sleep)
+        visible: showSleep
+      }
+
+      ListDelegate {
+        text: "Restart..."
+        highlight: delegateHighlight
+        icon: "system-reboot"
+        onClicked: executable.exec(restart)
+        visible: showRestart
+      }
+
+      ListDelegate {
+        text: "Shut Down..."
+        highlight: delegateHighlight
+        icon: "system-shutdown"
+        onClicked: executable.exec(shutDown)
+        visible: showShutdown
+      }
+
+      MenuSeparator {
+        padding: 0
+        contentItem: Rectangle {
+          implicitWidth: plasmoid.configuration.width
+          implicitHeight: 1.1
+          color: lineColor
+        }
+        visible: showSleep || showRestart || showShutdown
+      }
+
+      ListDelegate {
         text: "Lock Screen"
         highlight: delegateHighlight
         icon: "system-lock-screen"
-        onClicked: executable.exec('qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock')
-        visible: showLockscreen
+        onClicked: executable.exec(lockScreen)
+        visible: showLockScreen
       }
 
       ListDelegate {
-        id: suspendButton
-        text: "Suspend"
+        text: "Log Out"
         highlight: delegateHighlight
-        icon: "system-suspend"
-        onClicked: executable.exec('systemctl suspend')
-        visible: showSuspend
-      }
-
-      ListDelegate {
-        id: hibernateButton
-        text: "Hibernate"
-        highlight: delegateHighlight
-        icon: "system-suspend-hibernate"
-        onClicked: executable.exec('')
-        visible: showHibernate
-      }
-
-      ListDelegate {
-        id: rebootButton
-        text: "Reboot"
-        highlight: delegateHighlight
-        icon: "system-reboot"
-        onClicked: executable.exec('qdbus org.kde.LogoutPrompt /LogoutPrompt promptReboot')
-        visible: showReboot
-      }
-
-      ListDelegate {
-        id: kexecButton
-        text: "Kexec Reboot"
-        highlight: delegateHighlight
-        icon: "system-reboot"
-        // onClicked: executable.exec('')
-        visible: showKexec
-      }
-
-      ListDelegate {
-        id: shutdownButton
-        text: "Shutdown"
-        highlight: delegateHighlight
-        icon: "system-shutdown"
-        onClicked: executable.exec('qdbus org.kde.LogoutPrompt /LogoutPrompt promptShutDown')
-        visible: showShutdown
+        icon: "system-log-out"
+        onClicked: executable.exec(logOut)
+        visible: showLogout
       }
     }
   }

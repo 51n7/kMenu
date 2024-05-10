@@ -10,32 +10,85 @@
       <label>The name of the icon to use for the compact representation (e.g. on a small panel).</label>
       <default>start-here-kde</default>
     </entry>
-    <entry name="showLogout" type="Bool">
+
+    <entry name="showAboutThisComputer" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="showLockscreen" type="Bool">
+
+    <entry name="showSystemPreferences" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="showSuspend" type="Bool">
+
+    <entry name="showAppStore" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="showHibernate" type="Bool">
+
+    <entry name="showForceQuit" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="showReboot" type="Bool">
+
+    <entry name="showSleep" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="showKexec" type="Bool">
-      <default>false</default>
+
+    <entry name="showRestart" type="Bool">
+      <default>true</default>
     </entry>
+
     <entry name="showShutdown" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="width" type="int">
-      <default>180</default>
+
+    <entry name="showLockScreen" type="Bool">
+      <default>true</default>
     </entry>
+
+    <entry name="showLogout" type="Bool">
+      <default>true</default>
+    </entry>
+
+    <entry name="width" type="int">
+      <default>240</default>
+    </entry>
+
     <entry name="height" type="int">
-      <default>180</default>
+      <default>280</default>
+    </entry>
+
+    <entry name="aboutThisComputer" type="String">
+      <default>kinfocenter</default>
+    </entry>
+
+    <entry name="systemPreferences" type="String">
+      <default>systemsettings</default>
+    </entry>
+
+    <entry name="appStore" type="String">
+      <default>plasma-discover</default>
+    </entry>
+
+    <entry name="forceQuit" type="String">
+      <default>xkill</default>
+    </entry>
+
+    <entry name="sleep" type="String">
+      <default>systemctl suspend</default>
+    </entry>
+
+    <entry name="restart" type="String">
+      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptReboot</default>
+    </entry>
+
+    <entry name="shutDown" type="String">
+      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptShutDown</default>
+    </entry>
+
+    <entry name="lockScreen" type="String">
+      <default>qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock</default>
+    </entry>
+
+    <entry name="logOut" type="String">
+      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptLogout</default>
     </entry>
   </group>
 </kcfg>

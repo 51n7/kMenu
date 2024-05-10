@@ -13,13 +13,16 @@ import org.kde.ksvg as KSvg
 Item {
   id: iconField
 
-  property alias cfg_showLogout: showLogout.checked
-  property alias cfg_showLockscreen: showLockscreen.checked
-  property alias cfg_showSuspend: showSuspend.checked
-  property alias cfg_showHibernate: showHibernate.checked
-  property alias cfg_showReboot: showReboot.checked
-  property alias cfg_showKexec: showKexec.checked
+  property alias cfg_showAboutThisComputer: showAboutThisComputer.checked
+  property alias cfg_showSystemPreferences: showSystemPreferences.checked
+  property alias cfg_showAppStore: showAppStore.checked
+  property alias cfg_showForceQuit: showForceQuit.checked
+  property alias cfg_showSleep: showSleep.checked
+  property alias cfg_showRestart: showRestart.checked
   property alias cfg_showShutdown: showShutdown.checked
+  property alias cfg_showLockScreen: showLockScreen.checked
+  property alias cfg_showLogout: showLogout.checked
+
   property alias cfg_width: widthSpinBox.value
   property alias cfg_height: heightSpinBox.value
   property alias cfg_icon: textField.text
@@ -123,32 +126,40 @@ Item {
         text: 'Show buttons:'
       }
       QQC2.CheckBox {
-        id: showLogout
-        text: 'Logout'
+        id: showAboutThisComputer
+        text: 'About This Computer'
       }
       QQC2.CheckBox {
-        id: showLockscreen
-        text: 'Lock Screen'
+        id: showSystemPreferences
+        text: 'System Preferences'
       }
       QQC2.CheckBox {
-        id: showSuspend
-        text: 'Suspend'
+        id: showAppStore
+        text: 'App Store'
       }
       QQC2.CheckBox {
-        id: showHibernate
-        text: 'Hibernate'
+        id: showForceQuit
+        text: 'Force Quit'
       }
       QQC2.CheckBox {
-        id: showReboot
-        text: 'Reboot'
+        id: showSleep
+        text: 'Sleep'
       }
       QQC2.CheckBox {
-        id: showKexec
-        text: 'Kexec Reboot'
+        id: showRestart
+        text: 'Restart'
       }
       QQC2.CheckBox {
         id: showShutdown
-        text: 'Shutdown'
+        text: 'Shut Down'
+      }
+      QQC2.CheckBox {
+        id: showLockScreen
+        text: 'Lock Screen'
+      }
+      QQC2.CheckBox {
+        id: showLogout
+        text: 'Log Out'
       }
       
       Kirigami.FormLayout {
