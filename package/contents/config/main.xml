@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+    http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="Apperance">
+    <entry name="icon" type="String">
+      <label>The name of the icon to use for the compact representation (e.g. on a small panel).</label>
+      <default>start-here-kde</default>
+    </entry>
+    <entry name="showLogout" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="showLockscreen" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="showSuspend" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="showHibernate" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="showReboot" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="showKexec" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="showShutdown" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="width" type="int">
+      <default>180</default>
+    </entry>
+    <entry name="height" type="int">
+      <default>180</default>
+    </entry>
+  </group>
+</kcfg>

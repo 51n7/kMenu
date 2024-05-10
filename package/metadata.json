@@ -1,0 +1,20 @@
+{
+  "ServiceTypes": ["Plasma/Applet"],
+  "KPlugin": {
+    "Authors": [
+      {
+        "Name": "51n7"
+      }
+    ],
+    "Name": "kMenu",
+    "Id": "org.51n7.kMenu",
+    "Description": "",
+    "Category": "Application Launchers",
+    "Icon": "start-here-kde",
+    "License": "GPL-2.0",
+    "Version": "0.0.1",
+    "Website": ""
+  },
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-MainScript": "ui/main.qml"
+}
