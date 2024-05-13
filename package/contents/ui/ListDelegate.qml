@@ -14,21 +14,16 @@ Item {
 
   property alias text: label.text
   property alias icon: icon.source
-  property bool interactive: true
-  property bool interactiveIcon: false
-
   property alias containsMouse: area.containsMouse
-
+  property bool showIcons: plasmoid.configuration.showIcons
   property Item highlight
 
   Layout.fillWidth: true
-
   height: row.height
 
   MouseArea {
     id: area
     anchors.fill: parent
-    enabled: item.interactive
     hoverEnabled: true
     onClicked: item.clicked()
     onContainsMouseChanged: {
@@ -58,13 +53,7 @@ Item {
       Layout.maximumWidth: 1.6 * Kirigami.Units.iconSizes.small
       Layout.minimumHeight: 1.6 * Kirigami.Units.iconSizes.small
       Layout.maximumHeight: 1.6 * Kirigami.Units.iconSizes.small
-
-      MouseArea {
-        anchors.fill: parent
-        visible: item.interactiveIcon
-        cursorShape: Qt.PointingHandCursor
-        onClicked: item.iconClicked()
-      }
+      visible: showIcons
     }
 
     ColumnLayout {
@@ -76,16 +65,11 @@ Item {
         Layout.fillWidth: true
         wrapMode: Text.NoWrap
         elide: Text.ElideRight
-      }
-
-      PlasmaComponents.Label {
-        id: sublabel
-        Layout.fillWidth: true
-        wrapMode: Text.NoWrap
-        elide: Text.ElideRight
-        opacity: 0.6
-        font: Kirigami.Theme.smallFont
-        visible: text !== ""
+        // padding: showIcons ? 0 : 5
+        topPadding: showIcons ? 0 : 5
+        rightPadding: showIcons ? 0 : 7
+        bottomPadding: showIcons ? 0 : 5
+        leftPadding: showIcons ? 0 : 7
       }
     }
   }

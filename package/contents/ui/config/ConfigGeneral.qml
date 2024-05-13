@@ -22,6 +22,7 @@ Item {
   property alias cfg_showShutdown: showShutdown.checked
   property alias cfg_showLockScreen: showLockScreen.checked
   property alias cfg_showLogout: showLogout.checked
+  property alias cfg_showIcons: showIcons.checked
 
   property alias cfg_width: widthSpinBox.value
   property alias cfg_height: heightSpinBox.value
@@ -43,7 +44,7 @@ Item {
   Kirigami.FormLayout {
 
     QQC2.Label {
-      text: 'Icon:'
+      text: 'Toolbar Icon:'
     }
 
     RowLayout {
@@ -121,9 +122,16 @@ Item {
       Rectangle { Layout.bottomMargin: 5 }
     }
 
+    RowLayout {
+      QQC2.CheckBox {
+        id: showIcons
+        text: 'Show List Icons'
+      }
+    }
+
     Column {
       QQC2.Label {
-        text: 'Show buttons:'
+        text: 'Show Menu Items:'
       }
       QQC2.CheckBox {
         id: showAboutThisComputer

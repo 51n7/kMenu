@@ -23,7 +23,6 @@ PlasmoidItem  {
   property bool showLockScreen: plasmoid.configuration.showLockScreen
   property bool showLogout: plasmoid.configuration.showLogout
   
-
   property string icon: plasmoid.configuration.icon
   property string aboutThisComputer: plasmoid.configuration.aboutThisComputer
   property string systemPreferences: plasmoid.configuration.systemPreferences
@@ -53,8 +52,7 @@ PlasmoidItem  {
   PlasmaExtras.Highlight {
     id: delegateHighlight
     visible: false
-    // hovered: true
-    z: -1 // otherwise it shows ontop of the icon/label and tints them slightly
+    hovered: true
   }
 
   fullRepresentation: Item {
@@ -73,7 +71,7 @@ PlasmoidItem  {
       ListDelegate {
         text: "About This Computer"
         highlight: delegateHighlight
-        icon: "about"
+        icon: "help-hint"
         onClicked: executable.exec(aboutThisComputer)
         visible: showAboutThisComputer
       }
@@ -93,7 +91,7 @@ PlasmoidItem  {
       ListDelegate {
         text: "System Preferences..."
         highlight: delegateHighlight
-        icon: "system-settings"
+        icon: "settings-configure"
         onClicked: executable.exec(systemPreferences)
         visible: showSystemPreferences
       }
@@ -101,7 +99,7 @@ PlasmoidItem  {
       ListDelegate {
         text: "App Store..."
         highlight: delegateHighlight
-        icon: "system-software-update"
+        icon: "update-none"
         onClicked: executable.exec(appStore)
         visible: showAppStore
       }
