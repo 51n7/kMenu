@@ -4,7 +4,7 @@ This repo contains a KDE plasmoids (desktop widget) that provides a system menu 
 
 <!-- [Screencast_20240514_125254.webm](https://github.com/51n7/kMenu/assets/2657818/75f5734b-7096-4514-9f8e-fca4a5090072) -->
 
-[Screencast_20240514_124754.webm](https://github.com/51n7/kMenu/assets/2657818/352b3f6c-5445-4fc8-8224-d94477d253f7)
+![Screenshot_20240514_141500](https://github.com/51n7/kMenu/assets/2657818/30c3d72f-d8af-47b4-bc55-c950507da905)
 
 ## Installation
 
@@ -15,8 +15,10 @@ This repo contains a KDE plasmoids (desktop widget) that provides a system menu 
 ```
 
 - Log out and back in.
-- Right click taskbar and select "Edit Mode".
-- Select "Add Widget".
+- Right click the taskbar and select "Add Widgets...".
 - Find or search for kMenu and drag widget to taskbar.
+
+[screencast.webm](https://github.com/51n7/kMenu/assets/2657818/352b3f6c-5445-4fc8-8224-d94477d253f7)
+
 
 
