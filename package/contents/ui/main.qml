@@ -69,7 +69,7 @@ PlasmoidItem  {
       spacing: 0
 
       ListDelegate {
-        text: "About This Computer"
+        text: i18n("About This Computer")
         highlight: delegateHighlight
         icon: "help-hint"
         onClicked: executable.exec(aboutThisComputer)
@@ -89,7 +89,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "System Preferences..."
+        text: i18n("System Preferences...")
         highlight: delegateHighlight
         icon: "settings-configure"
         onClicked: executable.exec(systemPreferences)
@@ -97,7 +97,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "App Store..."
+        text: i18n("App Store...")
         highlight: delegateHighlight
         icon: "update-none"
         onClicked: executable.exec(appStore)
@@ -115,7 +115,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Force Quit..."
+        text: i18n("Force Quit...")
         highlight: delegateHighlight
         icon: "error"
         onClicked: executable.exec(forceQuit)
@@ -133,7 +133,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Sleep"
+        text: i18n("Sleep")
         highlight: delegateHighlight
         icon: "system-suspend"
         onClicked: executable.exec(sleep)
@@ -141,7 +141,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Restart..."
+        text: i18n("Restart...")
         highlight: delegateHighlight
         icon: "system-reboot"
         onClicked: executable.exec(restart)
@@ -149,7 +149,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Shut Down..."
+        text: i18n("Shut Down...")
         highlight: delegateHighlight
         icon: "system-shutdown"
         onClicked: executable.exec(shutDown)
@@ -167,7 +167,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Lock Screen"
+        text: i18n("Lock Screen")
         highlight: delegateHighlight
         icon: "system-lock-screen"
         onClicked: executable.exec(lockScreen)
@@ -175,7 +175,7 @@ PlasmoidItem  {
       }
 
       ListDelegate {
-        text: "Log Out"
+        text: i18n("Log Out")
         highlight: delegateHighlight
         icon: "system-log-out"
         onClicked: executable.exec(logOut)

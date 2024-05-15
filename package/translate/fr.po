@@ -1,0 +1,130 @@
+# Header entry was created by Lokalize.
+#
+#: ../contents/config/config.qml:8
+# SPDX-FileCopyrightText: 2024 Max le Fou <buttbadger@gmail.com>
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Max le Fou <buttbadger@gmail.com>\n"
+"PO-Revision-Date: 2024-05-15 12:13+0200\n"
+"Project-Id-Version: \n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 24.02.2\n"
+
+#: ../contents/config/config.qml:8
+msgid "General"
+msgstr "Général"
+
+#: ../contents/config/config.qml:14
+msgid "Overrides"
+msgstr "Remplacements"
+
+#: ../contents/ui/config/ConfigGeneral.qml:49
+msgid "Toolbar Icon:"
+msgstr "Icône:"
+
+#: ../contents/ui/config/ConfigGeneral.qml:87
+msgid "Choose..."
+msgstr "Choisir..."
+
+#: ../contents/ui/config/ConfigGeneral.qml:92
+msgid "Clear Icon..."
+msgstr "Supprimer l'icône"
+
+#: ../contents/ui/config/ConfigGeneral.qml:130
+msgid "Show List Icons"
+msgstr "Voir la liste des icônes"
+
+#: ../contents/ui/config/ConfigGeneral.qml:136
+msgid "Show Menu Items:"
+msgstr "Voir les éléments du menu"
+
+#: ../contents/ui/config/ConfigGeneral.qml:140
+#: ../contents/ui/main.qml:74
+msgid "About This Computer"
+msgstr "À propos de l'ordinateur"
+
+#: ../contents/ui/config/ConfigOverrides.qml:26
+msgid "About This Computer:"
+msgstr "À propos de l'ordinateur :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:144
+#: ../contents/ui/main.qml:94
+msgid "System Preferences"
+msgstr "Préférences"
+
+#: ../contents/ui/config/ConfigOverrides.qml:34
+msgid "System Preferences:"
+msgstr "Préférences :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:148
+#: ../contents/ui/main.qml:102
+msgid "App Store"
+msgstr "App Store"
+
+#: ../contents/ui/config/ConfigOverrides.qml:42
+msgid "App Store:"
+msgstr "App Store :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:152
+#: ../contents/ui/main.qml:120
+msgid "Force Quit"
+msgstr "Forcer à quitter"
+
+#: ../contents/ui/config/ConfigOverrides.qml:50
+msgid "Force Quit:"
+msgstr "Forcer à quitter :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:156
+#: ../contents/ui/main.qml:138
+msgid "Sleep"
+msgstr "Mise en veille"
+
+#: ../contents/ui/config/ConfigOverrides.qml:58
+msgid "Sleep:"
+msgstr "Mise en veille :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:160
+#: ../contents/ui/main.qml:146
+msgid "Restart"
+msgstr "Redémarrer"
+
+#: ../contents/ui/config/ConfigOverrides.qml:66
+msgid "Restart:"
+msgstr "Redémarrer :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:164
+#: ../contents/ui/main.qml:154
+msgid "Shut Down"
+msgstr "Éteindre"
+
+#: ../contents/ui/config/ConfigOverrides.qml:74
+msgid "Shut Down:"
+msgstr "Éteindre :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:168
+#: ../contents/ui/main.qml:172
+msgid "Lock Screen"
+msgstr "Verrouillage écran"
+
+#: ../contents/ui/config/ConfigOverrides.qml:82
+msgid "Lock Screen:"
+msgstr "Verrouillage écran :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:172
+#: ../contents/ui/main.qml:180
+msgid "Log Out"
+msgstr "Déconnexion"
+
+#: ../contents/ui/config/ConfigOverrides.qml:90
+msgid "Log Out:"
+msgstr "Déconnexion :"
+
+#: ../contents/ui/config/ConfigGeneral.qml:180
+msgid "Size:"
+msgstr "Taille :"
+
