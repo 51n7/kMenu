@@ -44,7 +44,7 @@ Item {
   Kirigami.FormLayout {
 
     QQC2.Label {
-      text: 'Toolbar Icon:'
+      text: i18n('Toolbar Icon:')
     }
 
     RowLayout {
@@ -82,12 +82,12 @@ Item {
         y: +parent.height
 
         QQC2.MenuItem {
-          text: 'Choose...'
+          text: i18n('Choose...')
           icon.name: "document-open"
           onClicked: dialogLoader.active = true
         }
         QQC2.MenuItem {
-          text: 'Clear Icon...'
+          text: i18n('Clear Icon...')
           icon.name: "edit-clear"
           onClicked: iconField.value = iconField.defaultValue
         }
@@ -125,49 +125,49 @@ Item {
     RowLayout {
       QQC2.CheckBox {
         id: showIcons
-        text: 'Show List Icons'
+        text: i18n('Show List Icons')
       }
     }
 
     Column {
       QQC2.Label {
-        text: 'Show Menu Items:'
+        text: i18n('Show Menu Items:')
       }
       QQC2.CheckBox {
         id: showAboutThisComputer
-        text: 'About This Computer'
+        text: i18n('About This Computer')
       }
       QQC2.CheckBox {
         id: showSystemPreferences
-        text: 'System Preferences'
+        text: i18n('System Preferences')
       }
       QQC2.CheckBox {
         id: showAppStore
-        text: 'App Store'
+        text: i18n('App Store')
       }
       QQC2.CheckBox {
         id: showForceQuit
-        text: 'Force Quit'
+        text: i18n('Force Quit')
       }
       QQC2.CheckBox {
         id: showSleep
-        text: 'Sleep'
+        text: i18n('Sleep')
       }
       QQC2.CheckBox {
         id: showRestart
-        text: 'Restart'
+        text: i18n('Restart')
       }
       QQC2.CheckBox {
         id: showShutdown
-        text: 'Shut Down'
+        text: i18n('Shut Down')
       }
       QQC2.CheckBox {
         id: showLockScreen
-        text: 'Lock Screen'
+        text: i18n('Lock Screen')
       }
       QQC2.CheckBox {
         id: showLogout
-        text: 'Log Out'
+        text: i18n('Log Out')
       }
       
       Kirigami.FormLayout {
@@ -175,7 +175,7 @@ Item {
         anchors.right: parent.right
 
         RowLayout {
-          Kirigami.FormData.label: "Size:"
+          Kirigami.FormData.label: i18n("Size:")
           QQC2.SpinBox {
             id: widthSpinBox
             from: 0

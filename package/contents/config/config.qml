@@ -3,13 +3,13 @@ import org.kde.plasma.configuration
 
 ConfigModel {
   ConfigCategory {
-    name: "General"
+    name: i18n("General")
     icon: "configure"
     source: "config/ConfigGeneral.qml"
   }
 
   ConfigCategory {
-    name: "Overrides"
+    name: i18n("Overrides")
     icon: "configure"
     source: "config/ConfigOverrides.qml"
   }
