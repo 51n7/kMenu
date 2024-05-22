@@ -35,6 +35,10 @@
       <default>true</default>
     </entry>
 
+    <entry name="showHibernate" type="Bool">
+      <default>true</default>
+    </entry>
+
     <entry name="showRestart" type="Bool">
       <default>true</default>
     </entry>
@@ -77,6 +81,10 @@
 
     <entry name="sleep" type="String">
       <default>systemctl suspend</default>
+    </entry>
+
+    <entry name="hibernate" type="String">
+      <default>systemctl hibernate</default>
     </entry>
 
     <entry name="restart" type="String">

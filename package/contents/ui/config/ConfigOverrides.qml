@@ -13,6 +13,7 @@ KCM.SimpleKCM {
   property alias cfg_appStore: appStore.text
   property alias cfg_forceQuit: forceQuit.text
   property alias cfg_sleep: sleep.text
+  property alias cfg_hibernate: hibernate.text
   property alias cfg_restart: restart.text
   property alias cfg_shutDown: shutDown.text
   property alias cfg_lockScreen: lockScreen.text
@@ -57,6 +58,14 @@ KCM.SimpleKCM {
     QQC2.TextField {
       id: sleep
       Layout.fillWidth: true
+    }
+
+    Rectangle { Layout.bottomMargin: 5 }
+
+    QQC2.Label { text: i18n('Hibernate:') }
+    QQC2.TextField {
+        id: hibernate
+        Layout.fillWidth: true
     }
 
     Rectangle { Layout.bottomMargin: 5 }

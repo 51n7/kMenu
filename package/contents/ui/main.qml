@@ -18,6 +18,7 @@ PlasmoidItem  {
   property bool showAppStore: plasmoid.configuration.showAppStore
   property bool showForceQuit: plasmoid.configuration.showForceQuit
   property bool showSleep: plasmoid.configuration.showSleep
+  property bool showHibernate: plasmoid.configuration.showHibernate
   property bool showRestart: plasmoid.configuration.showRestart
   property bool showShutdown: plasmoid.configuration.showShutdown
   property bool showLockScreen: plasmoid.configuration.showLockScreen
@@ -141,6 +142,14 @@ PlasmoidItem  {
       }
 
       ListDelegate {
+        text: i18n("Hibernate")
+        highlight: delegateHighlight
+        icon: "system-hibernate"
+        onClicked: executable.exec(hibernate)
+        visible: showHibernate
+      }
+
+      ListDelegate {
         text: i18n("Restart...")
         highlight: delegateHighlight
         icon: "system-reboot"
@@ -163,7 +172,7 @@ PlasmoidItem  {
           implicitHeight: 1.1
           color: lineColor
         }
-        visible: showSleep || showRestart || showShutdown
+        visible: showSleep || showHibernate || showRestart || showShutdown
       }
 
       ListDelegate {
