@@ -18,6 +18,7 @@ Item {
   property alias cfg_showAppStore: showAppStore.checked
   property alias cfg_showForceQuit: showForceQuit.checked
   property alias cfg_showSleep: showSleep.checked
+  property alias cfg_showHibernate: showHibernate.checked
   property alias cfg_showRestart: showRestart.checked
   property alias cfg_showShutdown: showShutdown.checked
   property alias cfg_showLockScreen: showLockScreen.checked
@@ -152,6 +153,10 @@ Item {
       QQC2.CheckBox {
         id: showSleep
         text: i18n('Sleep')
+      }
+      QQC2.CheckBox {
+        id: showHibernate
+        text: i18n('Hibernate')
       }
       QQC2.CheckBox {
         id: showRestart
