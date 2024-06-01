@@ -56,21 +56,16 @@ Item {
       visible: showIcons
     }
 
-    ColumnLayout {
+    PlasmaComponents.Label {
+      id: label
       Layout.fillWidth: true
-      spacing: 0
-
-      PlasmaComponents.Label {
-        id: label
-        Layout.fillWidth: true
-        wrapMode: Text.NoWrap
-        elide: Text.ElideRight
-        // padding: showIcons ? 0 : 5
-        topPadding: showIcons ? 0 : 5
-        rightPadding: showIcons ? 0 : 7
-        bottomPadding: showIcons ? 0 : 5
-        leftPadding: showIcons ? 0 : 7
-      }
+      wrapMode: Text.NoWrap
+      elide: Text.ElideRight
+      // padding: showIcons ? 0 : 5
+      topPadding: showIcons ? 0 : 5
+      rightPadding: showIcons ? 0 : 7
+      bottomPadding: showIcons ? 0 : 5
+      leftPadding: showIcons ? 0 : 7
     }
   }
 }

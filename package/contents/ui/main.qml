@@ -12,28 +12,12 @@ import org.kde.kirigami as Kirigami
 
 PlasmoidItem  {
   id: root
-
-  property bool showAboutThisComputer: plasmoid.configuration.showAboutThisComputer
-  property bool showSystemPreferences: plasmoid.configuration.showSystemPreferences
-  property bool showAppStore: plasmoid.configuration.showAppStore
-  property bool showForceQuit: plasmoid.configuration.showForceQuit
-  property bool showSleep: plasmoid.configuration.showSleep
-  property bool showHibernate: plasmoid.configuration.showHibernate
-  property bool showRestart: plasmoid.configuration.showRestart
-  property bool showShutdown: plasmoid.configuration.showShutdown
-  property bool showLockScreen: plasmoid.configuration.showLockScreen
-  property bool showLogout: plasmoid.configuration.showLogout
   
   property string icon: plasmoid.configuration.icon
-  property string aboutThisComputer: plasmoid.configuration.aboutThisComputer
-  property string systemPreferences: plasmoid.configuration.systemPreferences
-  property string appStore: plasmoid.configuration.appStore
-  property string forceQuit: plasmoid.configuration.forceQuit
-  property string sleep: plasmoid.configuration.sleep
-  property string restart: plasmoid.configuration.restart
-  property string shutDown: plasmoid.configuration.shutDown
-  property string lockScreen: plasmoid.configuration.lockScreen
-  property string logOut: plasmoid.configuration.logOut
+  property var iconList: plasmoid.configuration.iconList
+  property var labelList: plasmoid.configuration.labelList
+  property var cmdList: plasmoid.configuration.cmdList
+  property var separatorList: plasmoid.configuration.separatorList
 
   property string lineColor: '#1E000000'
   
@@ -54,6 +38,7 @@ PlasmoidItem  {
     id: delegateHighlight
     visible: false
     hovered: true
+    z: -1
   }
 
   fullRepresentation: Item {
@@ -69,126 +54,29 @@ PlasmoidItem  {
       anchors.fill: parent
       spacing: 0
 
-      ListDelegate {
-        text: i18n("About This Computer")
-        highlight: delegateHighlight
-        icon: "help-hint"
-        onClicked: executable.exec(aboutThisComputer)
-        visible: showAboutThisComputer
-      }
+      Repeater {
+        model: labelList
+        anchors.fill: parent
 
-      MenuSeparator {
-        padding: 0
-        // topPadding: 5
-        // bottomPadding: 5
-        contentItem: Rectangle {
-          implicitWidth: plasmoid.configuration.width
-          implicitHeight: 1.1
-          color: lineColor
+        ColumnLayout {
+          ListDelegate {
+            text: i18n(modelData)
+            highlight: delegateHighlight
+            icon: iconList[index]
+            onClicked: executable.exec(cmdList[index])
+          }
+
+          MenuSeparator {
+            Layout.topMargin: -3
+            padding: 0
+            contentItem: Rectangle {
+              implicitWidth: plasmoid.configuration.width
+              implicitHeight: 1.1
+              color: lineColor
+            }
+            visible: separatorList[index] === 'true'
+          }
         }
-        visible: showAboutThisComputer
-      }
-
-      ListDelegate {
-        text: i18n("System Preferences...")
-        highlight: delegateHighlight
-        icon: "settings-configure"
-        onClicked: executable.exec(systemPreferences)
-        visible: showSystemPreferences
-      }
-
-      ListDelegate {
-        text: i18n("App Store...")
-        highlight: delegateHighlight
-        icon: "update-none"
-        onClicked: executable.exec(appStore)
-        visible: showAppStore
-      }
-
-      MenuSeparator {
-        padding: 0
-        contentItem: Rectangle {
-          implicitWidth: plasmoid.configuration.width
-          implicitHeight: 1.1
-          color: lineColor
-        }
-        visible: showSystemPreferences || showAppStore
-      }
-
-      ListDelegate {
-        text: i18n("Force Quit...")
-        highlight: delegateHighlight
-        icon: "error"
-        onClicked: executable.exec(forceQuit)
-        visible: showForceQuit
-      }
-
-      MenuSeparator {
-        padding: 0
-        contentItem: Rectangle {
-          implicitWidth: plasmoid.configuration.width
-          implicitHeight: 1.1
-          color: lineColor
-        }
-        visible: showForceQuit
-      }
-
-      ListDelegate {
-        text: i18n("Sleep")
-        highlight: delegateHighlight
-        icon: "system-suspend"
-        onClicked: executable.exec(sleep)
-        visible: showSleep
-      }
-
-      ListDelegate {
-        text: i18n("Hibernate")
-        highlight: delegateHighlight
-        icon: "system-hibernate"
-        onClicked: executable.exec(hibernate)
-        visible: showHibernate
-      }
-
-      ListDelegate {
-        text: i18n("Restart...")
-        highlight: delegateHighlight
-        icon: "system-reboot"
-        onClicked: executable.exec(restart)
-        visible: showRestart
-      }
-
-      ListDelegate {
-        text: i18n("Shut Down...")
-        highlight: delegateHighlight
-        icon: "system-shutdown"
-        onClicked: executable.exec(shutDown)
-        visible: showShutdown
-      }
-
-      MenuSeparator {
-        padding: 0
-        contentItem: Rectangle {
-          implicitWidth: plasmoid.configuration.width
-          implicitHeight: 1.1
-          color: lineColor
-        }
-        visible: showSleep || showHibernate || showRestart || showShutdown
-      }
-
-      ListDelegate {
-        text: i18n("Lock Screen")
-        highlight: delegateHighlight
-        icon: "system-lock-screen"
-        onClicked: executable.exec(lockScreen)
-        visible: showLockScreen
-      }
-
-      ListDelegate {
-        text: i18n("Log Out")
-        highlight: delegateHighlight
-        icon: "system-log-out"
-        onClicked: executable.exec(logOut)
-        visible: showLogout
       }
     }
   }
