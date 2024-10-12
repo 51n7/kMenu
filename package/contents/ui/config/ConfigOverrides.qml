@@ -8,179 +8,193 @@ import org.kde.iconthemes as KIconThemes // IconDialog
 
 KCM.SimpleKCM {
   id: simpleKCM
-  property alias cfg_iconList: iconRepeater.model
-  property alias cfg_labelList: inputRepeater.model
-  property alias cfg_cmdList: commandRepeater.model
-  property alias cfg_separatorList: separatorRepeater.model
+  // property alias cfg_iconList: iconRepeater.model
+  property var cfg_labelList: cfg_labelList
+  property var cfg_cmdList: cfg_cmdList
+  // property alias cfg_separatorList: separatorRepeater.model
 
-  property int focusedIndex: -1 // Store the index of the focused item
+  Component.onCompleted: {
+    listView.model.clear();
+    for (let i = 0; i < cfg_labelList.length; i++) {
+      listView.model.append({
+        label: cfg_labelList[i],
+        command: cfg_cmdList[i]
+      });
+    }
+  }
   
   Kirigami.FormLayout {
     id: formLayout
     width: parent.width
-
-    Text {
-      text: '* select checkbox to add menu separator'
-      color: 'white'
-      anchors.top: parent.top
-      anchors.bottomMargin: 10
-    }
-
-    QQC2.Button {
-      text: "Add Menu Item"
+    height: parent.height
+    
+    ColumnLayout {
       Layout.fillWidth: true
-      onClicked: {
-        iconRepeater.model.push('');
-        inputRepeater.model.push('');
-        commandRepeater.model.push('');
-        separatorRepeater.model.push('');
-        simpleKCM.focusedIndex = inputRepeater.count - 1; // Set focus to the newly added item
+      height: parent.height
+      anchors.fill: parent
+
+      Text {
+        text: '* select checkbox to add menu separator'
+        color: 'white'
+        Layout.alignment: Qt.AlignTop
+        anchors.bottomMargin: 10
       }
-    }
 
-    RowLayout {
-
-      ColumnLayout {
-        Repeater {
-          id: separatorRepeater
-          model: separatorList
-
-          Rectangle {
-            // height: separatorRepeater.model[index] === 'true' ? 42 : 32;
-            height: 32;
-            color: 'white'
-            Layout.leftMargin: -25
-
-            QQC2.CheckBox {
-              id: menuSeparator
-              anchors.top: parent.top
-              anchors.topMargin: 5
-              checked: modelData === 'true'
-              onCheckedChanged: {
-                separatorRepeater.model[index] = checked;
-              }
-            }
-          }
+      QQC2.Button {
+        text: "Add Menu Item"
+        Layout.fillWidth: true
+        onClicked: {
+          print(cfg_labelList)
         }
       }
 
-      ColumnLayout {
-        Layout.leftMargin: -5
-        Repeater {
-          id: iconRepeater
-          model: iconRepeater.model
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        clip: true
+        color: "transparent"
 
-          ColumnLayout {
-            QQC2.Button {
-              icon.name: modelData
-              onClicked: {
-                dialogLoader.active = true
-                dialogLoader.row = index
+        ListView {
+          id: listView
+          anchors.fill: parent
+          spacing: 2
+          model: ListModel {}
+
+          delegate: Item {
+            width: listView.width
+            height: 40
+            // anchors.topMargin: 15
+
+            MouseArea {
+              id: dragArea
+              property bool held: false
+
+              anchors {
+                left: parent?.left
+                right: parent?.right
               }
-            }
+              height: content.height
+              width: content.width
 
-            // QQC2.MenuSeparator {
-            //   visible: separatorRepeater.model[index] === 'true'
-            //   contentItem: Rectangle {
-            //     implicitWidth: parent.width
-            //     implicitHeight: separatorRepeater.model[index] === 'true' ? 1 : 0;
-            //     color: 'white'
-            //   }
-            // }
-          }
-        }
-      }
+              /*TO DRAG FULL ROW UNCOMMENT THIS*/
 
-      ColumnLayout {
-        // Layout.leftMargin: -5
-        Repeater {
-          id: inputRepeater
-          model: labelList
+              // drag.target: held ? content : undefined
+              // drag.axis: Drag.YAxis
 
-          ColumnLayout {
-            QQC2.TextField {
-              placeholderText: "Label"
-              text: i18n(modelData)
-              onTextChanged: {
-                inputRepeater.model[index] = text;
-              }
-              onFocusChanged: {
-                if (focus) {
-                  simpleKCM.focusedIndex = index;
+              // onPressed: {
+              //   held = true;
+              //   parent.z = 999;
+              // }
+
+              // onReleased: {
+              //   held = false;
+              //   parent.z = 1;
+              //   content.y = 0
+              // }
+
+              Rectangle {
+                id: content
+                Drag.active: dragArea.held
+                Drag.source: dragArea
+                Drag.hotSpot.x: width / 2
+                Drag.hotSpot.y: height / 2
+
+                // color: dragArea.held ? "lightblue" : "lightgray"
+                color: "transparent"
+                height: parent.parent.height
+                width: listView.width
+
+                RowLayout {
+                  anchors.fill: parent
+
+                  QQC2.Button {
+                    id: handle
+                    icon.name: 'drag-handle-symbolic'
+                    Layout.alignment: Qt.AlignVCenter
+
+                    MouseArea {
+                      id: dragHandle
+                      anchors.fill: parent
+                      cursorShape: Qt.OpenHandCursor
+                      drag.target: content
+                      drag.axis: Drag.YAxis
+                      onPressed: {
+                        dragArea.held = true;
+                        dragArea.parent.z = 999;
+                      }
+                      onReleased: {
+                        dragArea.held = false;
+                        dragArea.parent.z = 1;
+                        content.y = 0
+                      }
+                    }
+                  }
+                  QQC2.Button {
+                    icon.name: 'arrow-left'
+                    Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                      print(handle.height)
+                    }
+                  }
+                  QQC2.TextField {
+                    placeholderText: 'label'
+                    text: model.label
+                    implicitHeight: handle.height
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                    onTextChanged: {
+                      if (text !== model.label) {
+                        listView.model.setProperty(index, "label", text);
+                        cfg_labelList[index] = text;
+                        simpleKCM.cfg_labelList = cfg_labelList;
+                      }
+                    }
+                  }
+                  QQC2.TextField {
+                    placeholderText: 'command'
+                    text: model.command
+                    implicitHeight: handle.height
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                    onTextChanged: {
+                      if (text !== model.command) {
+                        listView.model.setProperty(index, "command", text);
+                        cfg_cmdList[index] = text;
+                        simpleKCM.cfg_cmdList = cfg_cmdList;
+                      }
+                    }
+                  }
+                  QQC2.Button {
+                    icon.name: 'dialog-close'
+                    Layout.alignment: Qt.AlignVCenter
+                  }
+                }
+
+                Behavior on y {
+                  NumberAnimation {
+                    duration: 100
+                    easing.type: Easing.InOutQuad
+                  }
                 }
               }
-              focus: simpleKCM.focusedIndex === index; // Set focus explicitly
-            }
 
-            // QQC2.MenuSeparator {
-            //   visible: separatorRepeater.model[index] === 'true'
-            //   contentItem: Rectangle {
-            //     implicitWidth: parent.width
-            //     implicitHeight: 1
-            //     color: 'white'
-            //   }
-            // }
-          }
-        }
-      }
-      
-      ColumnLayout {
-        Repeater {
-          id: commandRepeater
-          model: cmdList
+              DropArea {
+                anchors {
+                  fill: parent
+                  margins: 10
+                }
 
-          ColumnLayout {
-            QQC2.TextField {
-              placeholderText: "Command"
-              text: i18n(modelData)
-              onTextChanged: {
-                commandRepeater.model[index] = text;
-              }
-              onFocusChanged: {
-                if (focus) {
-                  simpleKCM.focusedIndex = index;
+                onEntered: (drag) => {
+                  let sourceIndex = drag.source.DelegateModel.itemsIndex;
+                  let targetIndex = dragArea.DelegateModel.itemsIndex;
+
+                  listView.model.move(sourceIndex, targetIndex, 1);
                 }
               }
-              focus: simpleKCM.focusedIndex === index; // Set focus explicitly
             }
-
-            // QQC2.MenuSeparator {
-            //   visible: separatorRepeater.model[index] === 'true'
-            //   contentItem: Rectangle {
-            //     implicitWidth: parent.width
-            //     implicitHeight: separatorRepeater.model[index] === 'true' ? 1 : -10;
-            //     color: 'white'
-            //   }
-            // }
           }
-        }
-      }
 
-      ColumnLayout {
-        Repeater {
-          id: deleteRepeater
-          model: separatorRepeater.model
-
-          ColumnLayout {
-            QQC2.Button {
-              icon.name: 'dialog-close'
-              onClicked: {
-                iconRepeater.model.splice(index, 1);
-                inputRepeater.model.splice(index, 1);
-                commandRepeater.model.splice(index, 1);
-                separatorRepeater.model.splice(index, 1);
-              }
-            }
-
-            // QQC2.MenuSeparator {
-            //   visible: separatorRepeater.model[index] === 'true'
-            //   contentItem: Rectangle {
-            //     implicitWidth: parent.width
-            //     implicitHeight: separatorRepeater.model[index] === 'true' ? 1 : 0;
-            //     color: 'white'
-            //   }
-            // }
-          }
+          interactive: true // determines whether the user can interact with the ListView to scroll its contents.
         }
       }
     }
