@@ -44,7 +44,10 @@ KCM.SimpleKCM {
         text: "Add Menu Item"
         Layout.fillWidth: true
         onClicked: {
-          print(cfg_labelList)
+          listView.model.append({
+            label: '',
+            command: ''
+          });
         }
       }
 
@@ -133,7 +136,7 @@ KCM.SimpleKCM {
                     icon.name: 'arrow-left'
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                      print(handle.height)
+                      print(cfg_labelList)
                     }
                   }
                   QQC2.TextField {
@@ -167,6 +170,15 @@ KCM.SimpleKCM {
                   QQC2.Button {
                     icon.name: 'dialog-close'
                     Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                      cfg_labelList.splice(index, 1);
+                      cfg_cmdList.splice(index, 1);
+                      
+                      listView.model.remove(index);
+                      
+                      simpleKCM.cfg_labelList = cfg_labelList;
+                      simpleKCM.cfg_cmdList = cfg_cmdList;
+                    }
                   }
                 }
 
@@ -189,6 +201,14 @@ KCM.SimpleKCM {
                   let targetIndex = dragArea.DelegateModel.itemsIndex;
 
                   listView.model.move(sourceIndex, targetIndex, 1);
+
+                  // swap items in arrays
+                  [cfg_labelList[sourceIndex], cfg_labelList[targetIndex]] = [cfg_labelList[targetIndex], cfg_labelList[sourceIndex]];
+                  [cfg_cmdList[sourceIndex], cfg_cmdList[targetIndex]] = [cfg_cmdList[targetIndex], cfg_cmdList[sourceIndex]];
+
+                  // save updated arrays
+                  simpleKCM.cfg_labelList = cfg_labelList;
+                  simpleKCM.cfg_cmdList = cfg_cmdList;
                 }
               }
             }
