@@ -8,7 +8,7 @@ import org.kde.iconthemes as KIconThemes // IconDialog
 
 KCM.SimpleKCM {
   id: simpleKCM
-  // property alias cfg_iconList: iconRepeater.model
+  property var cfg_iconList: cfg_iconList
   property var cfg_labelList: cfg_labelList
   property var cfg_cmdList: cfg_cmdList
   // property alias cfg_separatorList: separatorRepeater.model
@@ -17,6 +17,7 @@ KCM.SimpleKCM {
     listView.model.clear();
     for (let i = 0; i < cfg_labelList.length; i++) {
       listView.model.append({
+        icon: cfg_iconList[i],
         label: cfg_labelList[i],
         command: cfg_cmdList[i]
       });
@@ -45,6 +46,7 @@ KCM.SimpleKCM {
         Layout.fillWidth: true
         onClicked: {
           listView.model.append({
+            icon: '',
             label: '',
             command: ''
           });
@@ -79,7 +81,7 @@ KCM.SimpleKCM {
               height: content.height
               width: content.width
 
-              /*TO DRAG FULL ROW UNCOMMENT THIS*/
+              /* TO CLICK AND DRAG FULL ROW UNCOMMENT THIS */
 
               // drag.target: held ? content : undefined
               // drag.axis: Drag.YAxis
@@ -132,13 +134,16 @@ KCM.SimpleKCM {
                       }
                     }
                   }
+
                   QQC2.Button {
-                    icon.name: 'arrow-left'
+                    icon.name: model.icon
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                      print(cfg_labelList)
+                      dialogLoader.active = true
+                      dialogLoader.row = index
                     }
                   }
+
                   QQC2.TextField {
                     placeholderText: 'label'
                     text: model.label
@@ -153,6 +158,7 @@ KCM.SimpleKCM {
                       }
                     }
                   }
+
                   QQC2.TextField {
                     placeholderText: 'command'
                     text: model.command
@@ -167,15 +173,18 @@ KCM.SimpleKCM {
                       }
                     }
                   }
+
                   QQC2.Button {
                     icon.name: 'dialog-close'
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
+                      cfg_iconList.splice(index, 1);
                       cfg_labelList.splice(index, 1);
                       cfg_cmdList.splice(index, 1);
                       
                       listView.model.remove(index);
                       
+                      simpleKCM.cfg_iconList = cfg_iconList;
                       simpleKCM.cfg_labelList = cfg_labelList;
                       simpleKCM.cfg_cmdList = cfg_cmdList;
                     }
@@ -203,10 +212,12 @@ KCM.SimpleKCM {
                   listView.model.move(sourceIndex, targetIndex, 1);
 
                   // swap items in arrays
+                  [cfg_iconList[sourceIndex], cfg_iconList[targetIndex]] = [cfg_iconList[targetIndex], cfg_iconList[sourceIndex]];
                   [cfg_labelList[sourceIndex], cfg_labelList[targetIndex]] = [cfg_labelList[targetIndex], cfg_labelList[sourceIndex]];
                   [cfg_cmdList[sourceIndex], cfg_cmdList[targetIndex]] = [cfg_cmdList[targetIndex], cfg_cmdList[sourceIndex]];
 
                   // save updated arrays
+                  simpleKCM.cfg_iconList = cfg_iconList;
                   simpleKCM.cfg_labelList = cfg_labelList;
                   simpleKCM.cfg_cmdList = cfg_cmdList;
                 }
@@ -229,7 +240,9 @@ KCM.SimpleKCM {
       visible: true
       modality: Qt.WindowModal
       onIconNameChanged: (iconName) => {
-        iconRepeater.model[row] = iconName;
+        listView.model.setProperty(row, "icon", iconName);
+        cfg_iconList[row] = iconName;
+        simpleKCM.cfg_iconList = cfg_iconList;
       }
       onVisibleChanged: {
         if (!visible) {
