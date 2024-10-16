@@ -14,43 +14,7 @@
     <entry name="showIcons" type="Bool">
       <default>false</default>
     </entry>
-
-    <entry name="showAboutThisComputer" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showSystemPreferences" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showAppStore" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showForceQuit" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showSleep" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showRestart" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showShutdown" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showLockScreen" type="Bool">
-      <default>true</default>
-    </entry>
-
-    <entry name="showLogout" type="Bool">
-      <default>true</default>
-    </entry>
-
+    
     <entry name="width" type="int">
       <default>240</default>
     </entry>
@@ -59,56 +23,20 @@
       <default>290</default>
     </entry>
 
-    <entry name="aboutThisComputer" type="String">
-      <default>kinfocenter</default>
-    </entry>
-
-    <entry name="systemPreferences" type="String">
-      <default>systemsettings</default>
-    </entry>
-
-    <entry name="appStore" type="String">
-      <default>plasma-discover</default>
-    </entry>
-
-    <entry name="forceQuit" type="String">
-      <default>xkill</default>
-    </entry>
-
-    <entry name="sleep" type="String">
-      <default>systemctl suspend</default>
-    </entry>
-
-    <entry name="restart" type="String">
-      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptReboot</default>
-    </entry>
-
-    <entry name="shutDown" type="String">
-      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptShutDown</default>
-    </entry>
-
-    <entry name="lockScreen" type="String">
-      <default>qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock</default>
-    </entry>
-
-    <entry name="logOut" type="String">
-      <default>qdbus org.kde.LogoutPrompt /LogoutPrompt  promptLogout</default>
-    </entry>
-
     <entry name="iconList" type="StringList">
-      <default>help-hint,settings-configure,update-none,error,system-suspend,system-reboot,system-shutdown,system-lock-screen,system-log-out</default>
+      <default>help-hint,filename-dash-amarok,settings-configure,update-none,filename-dash-amarok,error,filename-dash-amarok,system-suspend,system-reboot,system-shutdown,filename-dash-amarok,system-lock-screen,system-log-out</default>
     </entry>
 
     <entry name="labelList" type="StringList">
-      <default>About This Computer,System Preferences...,App Store...,Force Quit...,Sleep,Restart...,Shut Down...,Lock Screen,Log Out</default>
+      <default>About This Computer,separator,System Preferences...,App Store...,separator,Force Quit...,separator,Sleep,Restart...,Shut Down...,separator,Lock Screen,Log Out</default>
     </entry>
 
     <entry name="cmdList" type="StringList">
-      <default>kinfocenter,systemsettings,plasma-discover,xkill,systemctl suspend,qdbus org.kde.LogoutPrompt /LogoutPrompt  promptReboot,qdbus org.kde.LogoutPrompt /LogoutPrompt  promptShutDown,qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock,qdbus org.kde.LogoutPrompt /LogoutPrompt  promptLogout</default>
+      <default>kinfocenter,separator,systemsettings,plasma-discover,separator,xkill,separator,systemctl suspend,qdbus org.kde.LogoutPrompt /LogoutPrompt promptReboot,qdbus org.kde.LogoutPrompt /LogoutPrompt promptShutDown,separator,qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock,qdbus org.kde.LogoutPrompt /LogoutPrompt promptLogout</default>
     </entry>
 
     <entry name="separatorList" type="StringList">
-      <default>true,false,true,true,false,false,true,false,false</default>
+      <default>false,true,false,false,true,false,true,false,false,false,true,false,false</default>
     </entry>
   </group>
 </kcfg>

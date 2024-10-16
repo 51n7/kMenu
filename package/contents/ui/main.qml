@@ -56,14 +56,15 @@ PlasmoidItem  {
 
       Repeater {
         model: labelList
-        anchors.fill: parent
+        // anchors.fill: parent
 
         ColumnLayout {
           ListDelegate {
-            text: i18n(modelData)
+            text: modelData
             highlight: delegateHighlight
             icon: iconList[index]
             onClicked: executable.exec(cmdList[index])
+            visible: separatorList[index] === 'false'
           }
 
           MenuSeparator {

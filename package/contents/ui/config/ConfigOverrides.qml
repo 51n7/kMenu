@@ -11,7 +11,27 @@ KCM.SimpleKCM {
   property var cfg_iconList: cfg_iconList
   property var cfg_labelList: cfg_labelList
   property var cfg_cmdList: cfg_cmdList
-  // property alias cfg_separatorList: separatorRepeater.model
+  property var cfg_separatorList: cfg_separatorList
+
+  function addMenuItem(icon, label, command, separator) {
+
+    listView.model.append({
+      icon: icon,
+      label: label,
+      command: command,
+      separator: separator
+    });
+    
+    cfg_iconList.push(icon);
+    cfg_labelList.push(label);
+    cfg_cmdList.push(command);
+    cfg_separatorList.push(separator);
+    
+    simpleKCM.cfg_iconList = cfg_iconList;
+    simpleKCM.cfg_labelList = cfg_labelList;
+    simpleKCM.cfg_cmdList = cfg_cmdList;
+    simpleKCM.cfg_separatorList = cfg_separatorList;
+  }
 
   Component.onCompleted: {
     listView.model.clear();
@@ -19,7 +39,8 @@ KCM.SimpleKCM {
       listView.model.append({
         icon: cfg_iconList[i],
         label: cfg_labelList[i],
-        command: cfg_cmdList[i]
+        command: cfg_cmdList[i],
+        separator: cfg_separatorList[i]
       });
     }
   }
@@ -34,22 +55,21 @@ KCM.SimpleKCM {
       height: parent.height
       anchors.fill: parent
 
-      Text {
-        text: '* select checkbox to add menu separator'
-        color: 'white'
-        Layout.alignment: Qt.AlignTop
-        anchors.bottomMargin: 10
-      }
+      RowLayout {
+        QQC2.Button {
+          text: "Add Menu Item"
+          Layout.fillWidth: true
+          onClicked: {
+            addMenuItem('', '', '', 'false');
+          }
+        }
 
-      QQC2.Button {
-        text: "Add Menu Item"
-        Layout.fillWidth: true
-        onClicked: {
-          listView.model.append({
-            icon: '',
-            label: '',
-            command: ''
-          });
+        QQC2.Button {
+          text: "Add Menu Separator"
+          Layout.fillWidth: true
+          onClicked: {
+            addMenuItem('filename-dash-amarok', 'separator', 'separator', 'true');
+          }
         }
       }
 
@@ -68,7 +88,6 @@ KCM.SimpleKCM {
           delegate: Item {
             width: listView.width
             height: 40
-            // anchors.topMargin: 15
 
             MouseArea {
               id: dragArea
@@ -104,8 +123,7 @@ KCM.SimpleKCM {
                 Drag.hotSpot.x: width / 2
                 Drag.hotSpot.y: height / 2
 
-                // color: dragArea.held ? "lightblue" : "lightgray"
-                color: "transparent"
+                color: "transparent" // dragArea.held ? "lightblue" : "lightgray"
                 height: parent.parent.height
                 width: listView.width
 
@@ -114,7 +132,7 @@ KCM.SimpleKCM {
 
                   QQC2.Button {
                     id: handle
-                    icon.name: 'drag-handle-symbolic'
+                    icon.name: 'labplot-transform-move'
                     Layout.alignment: Qt.AlignVCenter
 
                     MouseArea {
@@ -138,9 +156,25 @@ KCM.SimpleKCM {
                   QQC2.Button {
                     icon.name: model.icon
                     Layout.alignment: Qt.AlignVCenter
+                    // visible: model.separator === 'false'
+                    opacity: model.separator === 'false' ? 1 : 0
+                    enabled: model.separator === 'false'
                     onClicked: {
                       dialogLoader.active = true
                       dialogLoader.row = index
+                    }
+                  }
+
+                  QQC2.CheckBox {
+                    id: menuSeparator
+                    visible: false
+                    checked: model.separator === 'true'
+                    onCheckedChanged: {
+                      if (String(checked) !== model.separator) {
+                        listView.model.setProperty(index, "separator", String(checked));
+                        cfg_separatorList[index] = String(checked);
+                        simpleKCM.cfg_separatorList = cfg_separatorList;
+                      }
                     }
                   }
 
@@ -150,6 +184,7 @@ KCM.SimpleKCM {
                     implicitHeight: handle.height
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
+                    visible: model.separator === 'false'
                     onTextChanged: {
                       if (text !== model.label) {
                         listView.model.setProperty(index, "label", text);
@@ -159,12 +194,21 @@ KCM.SimpleKCM {
                     }
                   }
 
+                  Rectangle {
+                    color: '#1c1c1c'
+                    visible: model.separator === 'true'
+                    implicitHeight: 1.1
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                  }
+
                   QQC2.TextField {
                     placeholderText: 'command'
                     text: model.command
                     implicitHeight: handle.height
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
+                    visible: model.separator === 'false'
                     onTextChanged: {
                       if (text !== model.command) {
                         listView.model.setProperty(index, "command", text);
@@ -181,12 +225,14 @@ KCM.SimpleKCM {
                       cfg_iconList.splice(index, 1);
                       cfg_labelList.splice(index, 1);
                       cfg_cmdList.splice(index, 1);
+                      cfg_separatorList.splice(index, 1);
                       
                       listView.model.remove(index);
                       
                       simpleKCM.cfg_iconList = cfg_iconList;
                       simpleKCM.cfg_labelList = cfg_labelList;
                       simpleKCM.cfg_cmdList = cfg_cmdList;
+                      simpleKCM.cfg_separatorList = cfg_separatorList;
                     }
                   }
                 }
@@ -215,11 +261,13 @@ KCM.SimpleKCM {
                   [cfg_iconList[sourceIndex], cfg_iconList[targetIndex]] = [cfg_iconList[targetIndex], cfg_iconList[sourceIndex]];
                   [cfg_labelList[sourceIndex], cfg_labelList[targetIndex]] = [cfg_labelList[targetIndex], cfg_labelList[sourceIndex]];
                   [cfg_cmdList[sourceIndex], cfg_cmdList[targetIndex]] = [cfg_cmdList[targetIndex], cfg_cmdList[sourceIndex]];
+                  [cfg_separatorList[sourceIndex], cfg_separatorList[targetIndex]] = [cfg_separatorList[targetIndex], cfg_separatorList[sourceIndex]];
 
                   // save updated arrays
                   simpleKCM.cfg_iconList = cfg_iconList;
                   simpleKCM.cfg_labelList = cfg_labelList;
                   simpleKCM.cfg_cmdList = cfg_cmdList;
+                  simpleKCM.cfg_separatorList = cfg_separatorList;
                 }
               }
             }
