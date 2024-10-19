@@ -37,6 +37,7 @@ Click menu icon, voila! 🎉
 #### Sort List
 
 Right click widget and select "Configure kMenu..."
+
 ![](https://github.com/user-attachments/assets/990ebf23-fa3c-47ec-acf3-d9b8cc31878b)
 
 
