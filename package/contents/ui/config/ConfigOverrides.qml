@@ -65,7 +65,7 @@ KCM.SimpleKCM {
         }
 
         QQC2.Button {
-          text: "Add Menu Separator"
+          text: "Add Separator"
           Layout.fillWidth: true
           onClicked: {
             addMenuItem('filename-dash-amarok', 'separator', 'separator', 'true');
@@ -132,8 +132,19 @@ KCM.SimpleKCM {
 
                   QQC2.Button {
                     id: handle
-                    icon.name: 'labplot-transform-move'
+                    icon.name: model.separator === 'false' ? 'labplot-transform-move' : ''
                     Layout.alignment: Qt.AlignVCenter
+                    Layout.fillWidth: model.separator === 'true'
+                    flat: model.separator === 'true'
+                    hoverEnabled: model.separator === 'false'
+
+                    QQC2.Button {
+                      width: parent.width
+                      height: 2
+                      hoverEnabled: false
+                      anchors.verticalCenter: parent.verticalCenter
+                      visible: model.separator === 'true'
+                    }
 
                     MouseArea {
                       id: dragHandle
@@ -156,9 +167,7 @@ KCM.SimpleKCM {
                   QQC2.Button {
                     icon.name: model.icon
                     Layout.alignment: Qt.AlignVCenter
-                    // visible: model.separator === 'false'
-                    opacity: model.separator === 'false' ? 1 : 0
-                    enabled: model.separator === 'false'
+                    visible: model.separator === 'false'
                     onClicked: {
                       dialogLoader.active = true
                       dialogLoader.row = index
@@ -192,14 +201,6 @@ KCM.SimpleKCM {
                         simpleKCM.cfg_labelList = cfg_labelList;
                       }
                     }
-                  }
-
-                  Rectangle {
-                    color: '#1c1c1c'
-                    visible: model.separator === 'true'
-                    implicitHeight: 1.1
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignVCenter
                   }
 
                   QQC2.TextField {
