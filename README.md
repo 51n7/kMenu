@@ -34,4 +34,9 @@ Click menu icon, voila! 🎉
 [screencast.webm](https://github.com/51n7/kMenu/assets/2657818/352b3f6c-5445-4fc8-8224-d94477d253f7)
 
 
+#### Sort List
+
+Right click widget and select "Configure kMenu..."
+![](https://github.com/user-attachments/assets/990ebf23-fa3c-47ec-acf3-d9b8cc31878b)
+
 
