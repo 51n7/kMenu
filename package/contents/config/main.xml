@@ -23,6 +23,10 @@
       <default>290</default>
     </entry>
 
+    <entry name="buttonHeight" type="int">
+      <default>30</default>
+    </entry>
+
     <entry name="iconList" type="StringList">
       <default>help-hint,filename-dash-amarok,settings-configure,update-none,filename-dash-amarok,error,filename-dash-amarok,system-suspend,system-reboot,system-shutdown,filename-dash-amarok,system-lock-screen,system-log-out</default>
     </entry>

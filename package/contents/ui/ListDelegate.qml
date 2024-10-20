@@ -21,7 +21,7 @@ Item {
   property bool hovered: false
 
   Layout.fillWidth: true
-  height: row.height
+  implicitHeight: plasmoid.configuration.buttonHeight
 
   MouseArea {
     id: area

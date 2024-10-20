@@ -15,7 +15,7 @@ KCM.SimpleKCM {
   id: iconField
   
   property alias cfg_width: widthSpinBox.value
-  property alias cfg_height: heightSpinBox.value
+  property alias cfg_buttonHeight: buttonHeightSpinBox.value
   property alias cfg_icon: textField.text
   property alias value: textField.text
   property alias placeholderValue: textField.placeholderText
@@ -127,17 +127,18 @@ KCM.SimpleKCM {
     }
 
     RowLayout {
-      Kirigami.FormData.label: i18n("Size:")
+      Kirigami.FormData.label: i18n("Menu Width:")
       QQC2.SpinBox {
         id: widthSpinBox
         from: 0
         to: 2147483647 // 2^31-1
       }
-      QQC2.Label {
-        text: " x "
-      }
+    }
+
+    RowLayout {
+      Kirigami.FormData.label: i18n("Button Height:")
       QQC2.SpinBox {
-        id: heightSpinBox
+        id: buttonHeightSpinBox
         from: 0
         to: 2147483647 // 2^31-1
       }
