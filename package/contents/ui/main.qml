@@ -34,16 +34,9 @@ PlasmoidItem  {
     }
   }
 
-  PlasmaExtras.Highlight {
-    id: delegateHighlight
-    visible: false
-    hovered: true
-    z: -1
-  }
-
   fullRepresentation: Item {
     Layout.preferredWidth: plasmoid.configuration.width
-    Layout.preferredHeight: plasmoid.configuration.height
+    Layout.preferredHeight: columm.implicitHeight
     Layout.minimumWidth: Layout.preferredWidth
     Layout.maximumWidth: Layout.preferredWidth
     Layout.minimumHeight: Layout.preferredHeight
@@ -56,19 +49,16 @@ PlasmoidItem  {
 
       Repeater {
         model: labelList
-        // anchors.fill: parent
 
         ColumnLayout {
           ListDelegate {
-            text: modelData
-            highlight: delegateHighlight
+            text: i18n(modelData)
             icon: iconList[index]
-            onClicked: executable.exec(cmdList[index])
             visible: separatorList[index] === 'false'
+            onClicked: executable.exec(cmdList[index])
           }
 
           MenuSeparator {
-            Layout.topMargin: -3
             padding: 0
             contentItem: Rectangle {
               implicitWidth: plasmoid.configuration.width

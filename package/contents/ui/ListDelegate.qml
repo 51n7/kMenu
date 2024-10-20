@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Controls as QQC2
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.extras as PlasmaExtras
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 
@@ -16,7 +18,7 @@ Item {
   property alias icon: icon.source
   property alias containsMouse: area.containsMouse
   property bool showIcons: plasmoid.configuration.showIcons
-  property Item highlight
+  property bool hovered: false
 
   Layout.fillWidth: true
   height: row.height
@@ -26,19 +28,8 @@ Item {
     anchors.fill: parent
     hoverEnabled: true
     onClicked: item.clicked()
-    onContainsMouseChanged: {
-      if (!highlight) {
-        return
-      }
-
-      if (containsMouse) {
-        highlight.parent = item
-        highlight.width = item.width
-        highlight.height = item.height
-      }
-
-      highlight.visible = containsMouse
-    }
+    onEntered: item.hovered = true
+    onExited: item.hovered = false
   }
 
   RowLayout {
@@ -66,6 +57,18 @@ Item {
       rightPadding: showIcons ? 0 : 7
       bottomPadding: showIcons ? 0 : 5
       leftPadding: showIcons ? 0 : 7
+    }
+  }
+
+  Rectangle {
+    anchors.fill: parent
+    color: "transparent"
+    visible: hovered
+    z: -1
+
+    PlasmaExtras.Highlight {
+      anchors.fill: parent
+      hovered: true
     }
   }
 }
