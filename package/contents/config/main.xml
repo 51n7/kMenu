@@ -40,7 +40,7 @@
     </entry>
 
     <entry name="cmdList" type="StringList">
-      <default>kinfocenter,separator,systemsettings,plasma-discover,separator,xkill,separator,systemctl suspend,qdbus org.kde.LogoutPrompt /LogoutPrompt promptReboot,qdbus org.kde.LogoutPrompt /LogoutPrompt promptShutDown,separator,qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock,qdbus org.kde.LogoutPrompt /LogoutPrompt promptLogout</default>
+      <default>kinfocenter,separator,systemsettings,plasma-discover,separator,xkill,separator,systemctl suspend,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptReboot,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptShutDown,separator,qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptLogout</default>
     </entry>
 
     <entry name="separatorList" type="StringList">
