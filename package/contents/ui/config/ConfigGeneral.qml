@@ -20,6 +20,7 @@ KCM.SimpleKCM {
   property alias value: textField.text
   property alias placeholderValue: textField.placeholderText
   property alias cfg_showIcons: showIcons.checked
+  property alias cfg_resizable: resizable.checked
 
   property string configKey: ''
   property string defaultValue: 'start-here-kde'
@@ -118,6 +119,13 @@ KCM.SimpleKCM {
       QQC2.CheckBox {
         id: showIcons
         text: i18n('Show List Icons')
+      }
+    }
+
+    RowLayout {
+      QQC2.CheckBox {
+        id: resizable
+        text: i18n('Allow Dropdown Resizing')
       }
     }
 

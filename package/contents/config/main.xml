@@ -15,6 +15,10 @@
       <default>false</default>
     </entry>
     
+    <entry name="resizable" type="Bool">
+      <default>false</default>
+    </entry>
+    
     <entry name="width" type="int">
       <default>240</default>
     </entry>

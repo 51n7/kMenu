@@ -37,10 +37,11 @@ PlasmoidItem  {
   fullRepresentation: Item {
     Layout.preferredWidth: plasmoid.configuration.width
     Layout.preferredHeight: columm.implicitHeight
-    Layout.minimumWidth: Layout.preferredWidth
-    Layout.maximumWidth: Layout.preferredWidth
-    Layout.minimumHeight: Layout.preferredHeight
-    Layout.maximumHeight: Layout.preferredHeight
+    
+    Layout.minimumWidth: plasmoid.configuration.resizable ? false : Layout.preferredWidth
+    Layout.maximumWidth: plasmoid.configuration.resizable ? false : Layout.preferredWidth
+    Layout.minimumHeight: plasmoid.configuration.resizable ? false : Layout.preferredHeight
+    Layout.maximumHeight: plasmoid.configuration.resizable ? false : Layout.preferredHeight
     
     ColumnLayout {
       id: columm
@@ -60,8 +61,9 @@ PlasmoidItem  {
 
           MenuSeparator {
             padding: 0
+            Layout.fillWidth: true
+            width: parent.width
             contentItem: Rectangle {
-              implicitWidth: plasmoid.configuration.width
               implicitHeight: 1.1
               color: lineColor
             }
