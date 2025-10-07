@@ -30,7 +30,8 @@ PlasmoidItem  {
     onNewData: (sourceName) => disconnectSource(sourceName)
 
     function exec(cmd) {
-      executable.connectSource(cmd)
+      var cleanCmd = cmd.replace(/\\n|\\s/g, '').trim()
+      executable.connectSource(cleanCmd)
     }
   }
 
