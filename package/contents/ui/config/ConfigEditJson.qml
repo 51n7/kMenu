@@ -31,6 +31,7 @@ KCM.SimpleKCM {
             id: jsonField
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.minimumHeight: Kirigami.Units.gridUnit * 15
             text: configEditJson.cfg_menuJson
             placeholderText: "[]"
             wrapMode: TextArea.NoWrap
