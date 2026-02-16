@@ -581,7 +581,7 @@ Item {
 
             QQC2.Button {
                 icon.name: "go-up"
-                text: i18n("Move Up")
+                // text: i18n("Move Up")
                 enabled: root.canMoveUp
                 onClicked: {
                     if (selectedItem) {
@@ -592,7 +592,7 @@ Item {
 
             QQC2.Button {
                 icon.name: "go-down"
-                text: i18n("Move Down")
+                // text: i18n("Move Down")
                 enabled: root.canMoveDown
                 onClicked: {
                     if (selectedItem) {
@@ -603,7 +603,7 @@ Item {
 
             QQC2.Button {
                 icon.name: "edit-delete"
-                text: i18n("Delete")
+                // text: i18n("Delete")
                 enabled: selectedItem !== null
                 onClicked: {
                     if (selectedItem) {
@@ -722,16 +722,21 @@ Item {
                             text: i18n("No item selected")
                             visible: root.selectedItem === null
                             color: Kirigami.Theme.disabledTextColor
+                            Layout.fillWidth: true
+                            horizontalAlignment: Text.AlignHCenter
                         }
 
                         QQC2.Label {
                             text: i18n("Separator selected")
                             visible: root.selectedItem !== null && root.selectedItem.hasOwnProperty("separator") && root.selectedItem.separator === true
                             color: Kirigami.Theme.disabledTextColor
+                            Layout.fillWidth: true
+                            horizontalAlignment: Text.AlignHCenter
                         }
 
                         RowLayout {
                             Kirigami.FormData.label: i18n("Name:")
+                            Layout.fillWidth: true
                             visible: root.selectedItem !== null && !root.selectedItem.separator
                             enabled: root.selectedItem !== null && !root.selectedItem.separator
                             
@@ -865,6 +870,7 @@ Item {
                         Item {
                             id: commandFieldContainer
                             Kirigami.FormData.label: i18n("Command:")
+                            Layout.fillWidth: true
                             
                             // Get fresh reference to selected item to ensure submenu property is available
                             property var currentItem: root.selectedPath ? root.findItemByPath(root.selectedPath) : null
@@ -886,7 +892,6 @@ Item {
                             enabled: visible
                             
                             implicitWidth: Kirigami.Units.gridUnit * 25
-                            width: Math.max(implicitWidth, (formLayout.width > 0 ? formLayout.width - Kirigami.Units.gridUnit * 4 : implicitWidth))
                             implicitHeight: Kirigami.Units.gridUnit * 6
                             height: implicitHeight
                             
