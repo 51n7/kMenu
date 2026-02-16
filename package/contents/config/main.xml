@@ -1,50 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-    http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
 
-  <group name="Apperance">
+  <group name="General">
     <entry name="icon" type="String">
       <label>The name of the icon to use for the compact representation (e.g. on a small panel).</label>
-      <default>start-here-kde</default>
+      <default>start-here-kde-symbolic</default>
     </entry>
-
+    <entry name="useCustomButtonImage" type="Bool">
+      <label>Whether to use a custom image instead of an icon in the compact representation (e.g. on a small panel).</label>
+      <default>false</default>
+    </entry>
+    <entry name="customButtonImage" type="Url">
+      <label>The URL of the custom image to use instead of an icon in the compact representation (e.g. on a small panel).</label>
+      <default></default>
+    </entry>
     <entry name="showIcons" type="Bool">
+      <label>Whether to show icons in the menu.</label>
       <default>false</default>
     </entry>
-    
-    <entry name="resizable" type="Bool">
-      <default>false</default>
-    </entry>
-    
-    <entry name="width" type="int">
+    <entry name="menuWidth" type="Int">
+      <label>Width of the menu dropdown in pixels. Use 0 for default width.</label>
       <default>240</default>
     </entry>
-
-    <entry name="height" type="int">
-      <default>290</default>
+    <entry name="buttonHeight" type="Int">
+      <label>Height of each menu item (button) in pixels. Use 0 for default height.</label>
+      <default>28</default>
+    </entry>
+    <entry name="menuJson" type="String">
+      <label>JSON object defining the menu structure. Each item can have: name, icon, command, submenu (array of items), separator (bool).</label>
+      <default>[
+        {
+          "name": "About This Computer",
+          "icon": "help-hint",
+          "command": "kinfocenter"
+        },
+        {
+          "separator": true
+        },
+        {
+          "name": "System Preferences...",
+          "icon": "settings-configure",
+          "command": "systemsettings"
+        },
+        {
+          "name": "App Store...",
+          "icon": "update-none",
+          "command": "plasma-discover"
+        },
+        {
+          "separator": true
+        },
+        {
+          "name": "Force Quit...",
+          "icon": "error",
+          "command": "xkill"
+        },
+        {
+          "separator": true
+        },
+        {
+          "name": "Sleep",
+          "icon": "system-suspend",
+          "command": "systemctl suspend"
+        },
+        {
+          "name": "Restart...",
+          "icon": "system-reboot",
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptReboot"
+        },
+        {
+          "name": "Shut Down...",
+          "icon": "system-shutdown",
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptShutDown"
+        },
+        {
+          "separator": true
+        },
+        {
+          "name": "Lock Screen",
+          "icon": "system-lock-screen",
+          "command": "qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock"
+        },
+        {
+          "name": "Log Out",
+          "icon": "system-log-out",
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptLogout"
+        }
+      ]</default>
     </entry>
 
-    <entry name="buttonHeight" type="int">
-      <default>30</default>
-    </entry>
-
-    <entry name="iconList" type="StringList">
-      <default>help-hint,filename-dash-amarok,settings-configure,update-none,filename-dash-amarok,error,filename-dash-amarok,system-suspend,system-reboot,system-shutdown,filename-dash-amarok,system-lock-screen,system-log-out</default>
-    </entry>
-
-    <entry name="labelList" type="StringList">
-      <default>About This Computer,separator,System Preferences...,App Store...,separator,Force Quit...,separator,Sleep,Restart...,Shut Down...,separator,Lock Screen,Log Out</default>
-    </entry>
-
-    <entry name="cmdList" type="StringList">
-      <default>kinfocenter,separator,systemsettings,plasma-discover,separator,xkill,separator,systemctl suspend,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptReboot,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptShutDown,separator,qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock,qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptLogout</default>
-    </entry>
-
-    <entry name="separatorList" type="StringList">
-      <default>false,true,false,false,true,false,true,false,false,false,true,false,false</default>
-    </entry>
   </group>
 </kcfg>
+

@@ -1,183 +1,166 @@
-import QtQuick
-import QtQuick.Controls as QQC2
-import QtQuick.Layouts
+/*
+    SPDX-FileCopyrightText: 2014 Eike Hein <hein@kde.org>
 
-import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.components as PlasmaComponents
-import org.kde.plasma.extras as PlasmaExtras
-import org.kde.kquickcontrolsaddons as KQuickAddons
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+
+import org.kde.draganddrop as DragDrop
+import org.kde.iconthemes as KIconThemes
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
-import org.kde.iconthemes as KIconThemes // IconDialog
 import org.kde.ksvg as KSvg
+import org.kde.plasma.core as PlasmaCore
 
 KCM.SimpleKCM {
-  id: iconField
-  
-  property alias cfg_width: widthSpinBox.value
-  property alias cfg_buttonHeight: buttonHeightSpinBox.value
-  property alias cfg_icon: textField.text
-  property alias value: textField.text
-  property alias placeholderValue: textField.placeholderText
-  property alias cfg_showIcons: showIcons.checked
-  property alias cfg_resizable: resizable.checked
+    id: configGeneral
 
-  property string configKey: ''
-  property string defaultValue: 'start-here-kde'
-  property int previewIconSize: Kirigami.Units.iconSizes.medium
-  readonly property string configValue: configKey ? plasmoid.configuration[configKey] : ""
+    property string cfg_icon: plasmoid.configuration.icon
+    property bool cfg_useCustomButtonImage: plasmoid.configuration.useCustomButtonImage
+    property string cfg_customButtonImage: plasmoid.configuration.customButtonImage
 
-  onConfigValueChanged: {
-    if (!textField.focus && value != configValue) {
-      value = configValue
-    }
-  }
+    property alias cfg_showIcons: showIcons.checked
+    property alias cfg_menuWidth: menuWidthSpinBox.value
+    property alias cfg_buttonHeight: buttonHeightSpinBox.value
 
-  Kirigami.FormLayout {
-    
-    ColumnLayout {
+    Kirigami.FormLayout {
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-      QQC2.Label {
-        text: i18n('Toolbar Icon:')
-      }
+        QQC2.Button {
+            id: iconButton
 
-      QQC2.Button {
-        id: iconButton
-        padding: Kirigami.Units.smallSpacing
-        Layout.alignment: Qt.AlignTop
+            Kirigami.FormData.label: i18n("Icon:")
 
-        implicitWidth: leftPadding + contentItem.implicitWidth + rightPadding
-        implicitHeight: topPadding + contentItem.implicitHeight + bottomPadding
+            implicitWidth: previewFrame.width + Kirigami.Units.smallSpacing * 2
+            implicitHeight: previewFrame.height + Kirigami.Units.smallSpacing * 2
 
-        onPressed: iconMenu.opened ? iconMenu.close() : iconMenu.open()
-        
-        contentItem: KSvg.FrameSvgItem {
-          id: previewFrame
-          imagePath: plasmoid.location === PlasmaCore.Types.Vertical || plasmoid.location === PlasmaCore.Types.Horizontal
-              ? "widgets/panel-background" : "widgets/background"
-          implicitWidth: fixedMargins.left + previewIconSize + fixedMargins.right
-          implicitHeight: fixedMargins.top + previewIconSize + fixedMargins.bottom
+            checkable: true
+            checked: dropArea.containsAcceptableDrag
 
-          Kirigami.Icon {
-            anchors.fill: parent
-            anchors.leftMargin: previewFrame.fixedMargins.left
-            anchors.topMargin: previewFrame.fixedMargins.top
-            anchors.rightMargin: previewFrame.fixedMargins.right
-            anchors.bottomMargin: previewFrame.fixedMargins.bottom
-            source: iconField.value || iconField.placeholderValue
-            active: iconButton.hovered
-          }
+            onPressed: iconMenu.opened ? iconMenu.close() : iconMenu.open()
+
+            DragDrop.DropArea {
+                id: dropArea
+
+                property bool containsAcceptableDrag: false
+
+                anchors.fill: parent
+
+                onDragEnter: event => {
+                    const urlString = event.mimeData.url.toString();
+                    const extensions = [".png", ".xpm", ".svg", ".svgz"];
+                    containsAcceptableDrag = urlString.startsWith("file:///")
+                        && extensions.some(extension => urlString.endsWith(extension));
+
+                    if (!containsAcceptableDrag) {
+                        event.ignore();
+                    }
+                }
+                onDragLeave: event => {
+                    containsAcceptableDrag = false
+                }
+
+                onDrop: event => {
+                    if (containsAcceptableDrag) {
+                        iconDialog.setCustomButtonImage(event.mimeData.url.toString().substr("file://".length));
+                    }
+                    containsAcceptableDrag = false;
+                }
+            }
+
+            KIconThemes.IconDialog {
+                id: iconDialog
+
+                function setCustomButtonImage(image) {
+                    configGeneral.cfg_customButtonImage = image || configGeneral.cfg_icon || "start-here-kde-symbolic"
+                    configGeneral.cfg_useCustomButtonImage = true;
+                }
+
+                onIconNameChanged: (iconName) => {
+                    if (iconName != "") {
+                        setCustomButtonImage(iconName)
+                    }
+                }
+            }
+
+            KSvg.FrameSvgItem {
+                id: previewFrame
+                anchors.centerIn: parent
+                imagePath: plasmoid.location === PlasmaCore.Types.Vertical || plasmoid.location === PlasmaCore.Types.Horizontal
+                        ? "widgets/panel-background" : "widgets/background"
+                width: Kirigami.Units.iconSizes.large + fixedMargins.left + fixedMargins.right
+                height: Kirigami.Units.iconSizes.large + fixedMargins.top + fixedMargins.bottom
+
+                Kirigami.Icon {
+                    anchors.centerIn: parent
+                    width: Kirigami.Units.iconSizes.large
+                    height: width
+                    source: configGeneral.cfg_useCustomButtonImage ? configGeneral.cfg_customButtonImage : configGeneral.cfg_icon
+                }
+            }
+
+            QQC2.Menu {
+                id: iconMenu
+
+                y: parent.height
+
+                onClosed: iconButton.checked = false;
+
+                QQC2.MenuItem {
+                    text: i18nc("@item:inmenu Open icon chooser dialog", "Choose…")
+                    icon.name: "document-open-folder"
+                    onClicked: iconDialog.open()
+                }
+                QQC2.MenuItem {
+                    text: i18nc("@item:inmenu Reset icon to default", "Clear Icon")
+                    icon.name: "edit-clear"
+                    onClicked: {
+                        configGeneral.cfg_icon = "start-here-kde-symbolic"
+                        configGeneral.cfg_customButtonImage = ""
+                        configGeneral.cfg_useCustomButtonImage = false
+                    }
+                }
+            }
         }
-      }
 
-      QQC2.Menu {
-        id: iconMenu
-        y: +parent.height
-
-        QQC2.MenuItem {
-          text: i18n('Choose...')
-          icon.name: "document-open"
-          onClicked: dialogLoader.active = true
+        Item {
+            Kirigami.FormData.isSection: true
         }
-        QQC2.MenuItem {
-          text: i18n('Clear Icon...')
-          icon.name: "edit-clear"
-          onClicked: iconField.value = iconField.defaultValue
+
+        QQC2.CheckBox {
+            id: showIcons
+
+            Kirigami.FormData.label: i18n("General:")
+            text: i18n("Show icons in the menu")
         }
-      }
 
-      QQC2.TextField {
-        id: textField
-        Layout.fillWidth: true
-        visible: false
-
-        text: iconField.configValue
-        rightPadding: clearButton.width + Kirigami.Units.smallSpacing
-        onTextChanged: serializeTimer.restart()
-
-        QQC2.ToolButton {
-          id: clearButton
-          visible: iconField.configValue != iconField.defaultValue
-          icon.name: iconField.defaultValue === "" ? "edit-clear" : "edit-undo"
-          onClicked: iconField.value = iconField.defaultValue
-
-          anchors.top: parent.top
-          anchors.right: parent.right
-          anchors.bottom: parent.bottom
-
-          width: height
+        RowLayout {
+            spacing: 0
+            Rectangle { Layout.bottomMargin: 20 }
         }
-      }
-    }
 
-    RowLayout {
-      spacing: 0
-      Rectangle { Layout.bottomMargin: 20 }
-    }
-
-    RowLayout {
-      QQC2.CheckBox {
-        id: showIcons
-        text: i18n('Show List Icons')
-      }
-    }
-
-    RowLayout {
-      QQC2.CheckBox {
-        id: resizable
-        text: i18n('Allow Dropdown Resizing')
-      }
-    }
-
-    RowLayout {
-      spacing: 0
-      Rectangle { Layout.bottomMargin: 20 }
-    }
-
-    RowLayout {
-      Kirigami.FormData.label: i18n("Menu Width:")
-      QQC2.SpinBox {
-        id: widthSpinBox
-        from: 0
-        to: 2147483647 // 2^31-1
-      }
-    }
-
-    RowLayout {
-      Kirigami.FormData.label: i18n("Button Height:")
-      QQC2.SpinBox {
-        id: buttonHeightSpinBox
-        from: 0
-        to: 2147483647 // 2^31-1
-      }
-    }
-  }
-
-  Loader {
-    id: dialogLoader
-    active: false
-    sourceComponent: KIconThemes.IconDialog {
-      id: dialog
-      visible: true
-      modality: Qt.WindowModal
-      onIconNameChanged: (iconName) => {
-        iconField.value = iconName
-      }
-      onVisibleChanged: {
-        if (!visible) {
-          dialogLoader.active = false
+        RowLayout {
+            Kirigami.FormData.label: i18n("Menu Width:")
+            QQC2.SpinBox {
+                id: menuWidthSpinBox
+                from: 0
+                // INT_MAX (2^31-1): max value for config Int type; effectively no upper limit for width
+                to: 2147483647
+            }
         }
-      }
-    }
-  }
 
-  Timer { // throttle
-    id: serializeTimer
-    interval: 300
-    onTriggered: {
-      if (configKey) {
-        plasmoid.configuration[configKey] = iconField.value
-      }
+        RowLayout {
+            Kirigami.FormData.label: i18n("Button Height:")
+            QQC2.SpinBox {
+                id: buttonHeightSpinBox
+                from: 0
+                // INT_MAX (2^31-1): max value for config Int type; effectively no upper limit
+                to: 2147483647
+            }
+        }
     }
-  }
 }

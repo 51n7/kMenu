@@ -1,77 +1,108 @@
-// https://develop.kde.org/docs/plasma/widget/porting_kf6/#new-plasma5support-library
+pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import org.kde.plasma.plasmoid
-import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.components as PlasmaComponents
-import org.kde.plasma.plasma5support as Plasma5Support
-import org.kde.plasma.extras as PlasmaExtras
+
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents3
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.plasmoid
+import org.kde.plasma.plasma5support as Plasma5Support
+import org.kde.plasma.private.kicker as Kicker
 
-PlasmoidItem  {
-  id: root
-  
-  property string icon: plasmoid.configuration.icon
-  property var iconList: plasmoid.configuration.iconList
-  property var labelList: plasmoid.configuration.labelList
-  property var cmdList: plasmoid.configuration.cmdList
-  property var separatorList: plasmoid.configuration.separatorList
+PlasmoidItem {
+    id: kicker
 
-  property string lineColor: '#1E000000'
-  
-  Plasmoid.icon: icon
+    anchors.fill: parent
 
-  Plasma5Support.DataSource {
-    id: executable
-    engine: "executable"
-    connectedSources: []
-    onNewData: (sourceName) => disconnectSource(sourceName)
+    signal reset
+    signal modelRefreshed
 
-    function exec(cmd) {
-      var cleanCmd = cmd.replace(/\\n|\\s/g, '').trim()
-      executable.connectSource(cleanCmd)
+    switchWidth: !fullRepresentationItem ? 0 : fullRepresentationItem.Layout.minimumWidth
+    switchHeight: !fullRepresentationItem ? 0 : fullRepresentationItem.Layout.minimumHeight
+
+    fullRepresentation: menuRepresentationComponent
+
+    readonly property Component itemListDialogComponent: Component {
+        ItemListDialog {}
     }
-  }
 
-  fullRepresentation: Item {
-    Layout.preferredWidth: plasmoid.configuration.width
-    Layout.preferredHeight: columm.implicitHeight
-    
-    Layout.minimumWidth: plasmoid.configuration.resizable ? false : Layout.preferredWidth
-    Layout.maximumWidth: plasmoid.configuration.resizable ? false : Layout.preferredWidth
-    Layout.minimumHeight: plasmoid.configuration.resizable ? false : Layout.preferredHeight
-    Layout.maximumHeight: plasmoid.configuration.resizable ? false : Layout.preferredHeight
-    
-    ColumnLayout {
-      id: columm
-      anchors.fill: parent
-      spacing: 0
+    property Item dragSource: null
 
-      Repeater {
-        model: labelList
+    Plasmoid.icon: Plasmoid.configuration.useCustomButtonImage ? Plasmoid.configuration.customButtonImage : Plasmoid.configuration.icon
 
-        ColumnLayout {
-          ListDelegate {
-            text: i18n(modelData)
-            icon: iconList[index]
-            visible: separatorList[index] === 'false'
-            onClicked: executable.exec(cmdList[index])
-          }
-
-          MenuSeparator {
-            padding: 0
-            Layout.fillWidth: true
-            width: parent.width
-            contentItem: Rectangle {
-              implicitHeight: 1.1
-              color: lineColor
-            }
-            visible: separatorList[index] === 'true'
-          }
+    Component {
+        id: menuRepresentationComponent
+        MenuRepresentation {
+            rootModel: rootModel
+            itemListDialogComponent: kicker.itemListDialogComponent
+            onInteractionConcluded: kicker.expanded = false
         }
-      }
     }
-  }
+
+    JsonMenuModel {
+        id: rootModel
+
+        jsonData: Plasmoid.configuration.menuJson || ""
+        sorted: false
+        executable: executable
+
+        onRefreshed: {
+            kicker.modelRefreshed();
+        }
+    }
+
+    Connections {
+        target: Plasmoid.configuration
+
+        function onMenuJsonChanged() {
+            rootModel.jsonData = Plasmoid.configuration.menuJson;
+        }
+    }
+
+    Kicker.DragHelper {
+        id: dragHelper
+
+        dragIconSize: Kirigami.Units.iconSizes.medium
+    }
+
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: (sourceName) => disconnectSource(sourceName)
+
+        function exec(cmd) {
+            executable.connectSource(cmd)
+        }
+    }
+
+    Kicker.WindowSystem { // only for X11; TODO Plasma 6.8: remove (also from plasma-workspace)
+        id: windowSystem
+    }
+
+    Connections {
+        target: kicker
+
+        function onExpandedChanged(expanded) {
+            if (!expanded) {
+                kicker.reset();
+            }
+        }
+    }
+
+    function resetDragSource() {
+        dragSource = null;
+    }
+
+    Component.onCompleted: {
+        if (Plasmoid.hasOwnProperty("activationTogglesExpanded")) {
+            Plasmoid.activationTogglesExpanded = true
+        }
+
+        rootModel.refreshed.connect(modelRefreshed);
+
+        dragHelper.dropped.connect(resetDragSource);
+    }
 }
+
