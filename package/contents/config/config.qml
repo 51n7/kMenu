@@ -13,5 +13,10 @@ ConfigModel {
          icon: "application-menu"
          source: "config/ConfigMenuJson.qml"
     }
+    ConfigCategory {
+         name: i18n("Edit JSON")
+         icon: "code-context"
+         source: "config/ConfigEditJson.qml"
+    }
 }
 
