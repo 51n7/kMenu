@@ -70,12 +70,12 @@
         {
           "name": "Restart...",
           "icon": "system-reboot",
-          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptReboot"
+          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptReboot"
         },
         {
           "name": "Shut Down...",
           "icon": "system-shutdown",
-          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptShutDown"
+          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptShutDown"
         },
         {
           "separator": true
@@ -83,12 +83,12 @@
         {
           "name": "Lock Screen",
           "icon": "system-lock-screen",
-          "command": "qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock"
+          "command": "qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock"
         },
         {
           "name": "Log Out",
           "icon": "system-log-out",
-          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptLogout"
+          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptLogout"
         }
       ]</default>
     </entry>
