@@ -38,6 +38,7 @@ Click menu icon, voila! 🎉
 
 Right click widget and select "Configure kMenu..."
 
-![](https://github.com/user-attachments/assets/990ebf23-fa3c-47ec-acf3-d9b8cc31878b)
+![](https://github.com/user-attachments/assets/46b55c74-9076-4c07-ab42-f919e499dd9f)
+
 
 
