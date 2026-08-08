@@ -168,7 +168,7 @@ PlasmaComponents3.ScrollView {
         } else if (itemList.childDialog && listView.currentIndex != itemList.childDialog?.index) {
             listView.currentIndex = childDialog.index
         } else if ((!itemList.childDialog || !itemList.dialog)
-            && (!itemList.currentItem || !(itemList.currentItem as ItemListDelegate).menu.opened)) {
+            && (!itemList.currentItem || !(itemList.currentItem as ItemListDelegate)?.menu?.opened)) {
             resetIndexTimer.start();
         }
     }

@@ -106,8 +106,8 @@ PlasmaComponents3.ItemDelegate {
     Accessible.description: isParent
         ? i18nc("@action:inmenu accessible description for opening submenu", "Open category")
         : i18nc("@action:inmenu accessible description for opening app or file", "Launch")
-    text: model.display
-    icon.name: decoration
+    text: model?.display ?? ""
+    icon.name: decoration || ""
 
     onActualHasChildrenChanged: {
         if (!actualHasChildren && ListView.view.currentItem === item) {
