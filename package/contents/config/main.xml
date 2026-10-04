@@ -83,7 +83,7 @@
         {
           "name": "Lock Screen",
           "icon": "system-lock-screen",
-          "command": "loginctl lock-session"
+          "command": "qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock"
         },
         {
           "name": "Log Out",
