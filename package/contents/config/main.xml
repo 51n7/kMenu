@@ -36,7 +36,7 @@
         {
           "name": "About This Computer",
           "icon": "help-hint",
-          "command": "kinfocenter"
+          "command": "kcmshell6 kcm_about-distro"
         },
         {
           "separator": true
@@ -57,7 +57,7 @@
         {
           "name": "Force Quit...",
           "icon": "error",
-          "command": "xkill"
+          "command": "qdbus6 org.kde.KWin /KWin killWindow"
         },
         {
           "separator": true
@@ -70,12 +70,12 @@
         {
           "name": "Restart...",
           "icon": "system-reboot",
-          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptReboot"
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptReboot"
         },
         {
           "name": "Shut Down...",
           "icon": "system-shutdown",
-          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptShutDown"
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptShutDown"
         },
         {
           "separator": true
@@ -83,12 +83,12 @@
         {
           "name": "Lock Screen",
           "icon": "system-lock-screen",
-          "command": "qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock"
+          "command": "qdbus6 org.freedesktop.ScreenSaver /ScreenSaver Lock"
         },
         {
           "name": "Log Out",
           "icon": "system-log-out",
-          "command": "qdbus org.kde.LogoutPrompt /LogoutPrompt promptLogout"
+          "command": "qdbus6 org.kde.LogoutPrompt /LogoutPrompt promptLogout"
         }
       ]</default>
     </entry>
